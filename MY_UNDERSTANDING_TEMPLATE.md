@@ -50,39 +50,64 @@ Do not copy from documentation, your code comments, or AI output. If you are uns
 **4. What are HTTP status codes? List every status code you used in your API and explain why you chose it for that situation.**
 
 *Your answer:*
+- เป็นการบอกสถานะผลลัพธ์การทำงานของแต่ละงานที่ทำ
+- 200 ใช้กับการทำงานที่สำเร็จ
+- 201 ใช้กับการสร้างข้อมูลใหม่สำเร็จ
+- 400 ใช้กับการเกิดข้อผิดพลาด ที่เกิดจาก Client ส่งข้อมูลมาผิด/ไม่ครบ/ไม่ตรงตามที่กำหนดครับ
+- 404 หาข้อมูลไม่พบ
 
 ---
 
 **5. What is middleware? Describe what it does in your own words and give one example from your code.**
 
 *Your answer:*
+- Middleware คือฟังชั่นที่ทำงานระหว่าง Client กับ Server เพื่อป้องกัน/ลดปัญหาบางอย่างที่จะเกิดขึ้น ตามที่เรากำหนดไว้ เช่น การเช็ค jwt/cookie/token ครับ
+- เมื่อมี req จาก Client เข้ามาที่ Server ก็จะต้องผ่าน Middleware ก่อน ซึ่งอาจมีได้หลายตัว
+- เมื่อผ่านแต่ละตัวตามลำดับทั้งหมดแล้ว ถึงจะไปที่ Server เพื่อทำงาน CRUD ต่อไปครับ
 
 ---
 
 **6. Why does the order of middleware matter in Express? What could go wrong if it were in the wrong order?**
 
 *Your answer:*
+- Server อาจ crash / ทำงานผิดปกติ / โดนเจาะระบบครับ
 
 ---
 
 **7. Walk through what happens on the server, step by step, when a POST request is sent to `/products`.**
 
 *Your answer:*
+- แกะเอาข้อมูลใน body ที่ส่งมาจาก req เพื่อนำมาใช้
+- เช็คว่ามีที่ไม่มีข้อมูลไหมด้วย if แล้ว return บอก
+- try catch คือการดักการทำงาน เพื่อไม่ให้เกิด crash กับ Server
+- โดยจะทำงานใน try หากมี error ก็จะกระโดดไปที่ catch
+- สร้าง id ด้วยการหาค่า id ที่มากที่สุด แล้ว +1 จากนั้นก็แปลงค่าเป็น String
+- นำข้อมูลที่แกะจาก req.body กับ id ที่สร้างมาให้ มารวมไว้ที่ const newProduct
+- สร้างข้อมูลใน Database ด้วย push() , newProduct คือข้อมูลใหม่ , products คือข้อมูลทั้งหมดจาก Database
+- จากนั้นส่งผลกลับไปให้ Client ด้วย return res
 
 ---
 
 **8. What is CRUD? Map each operation to the HTTP method and route you used in your API.**
 
 *Your answer:*
+- CRUD คือการทำงาน 4 แบบของ API ที่ใช้ติดต่อกับ Database คือ สร้าง อ่าน อัพเดท และลบข้อมูล
+- C สร้าง/เพิ่มข้อมูล - HTTP method คือ post - Route คือ "/products"
+- R อ่านข้อมูล - HTTP method คือ get - Route คือ "/products" && "/products/:id"
+- U อัพเดทข้อมูล - HTTP method คือ put - Route คือ "/products/:id"
+- D ลบข้อมูล - HTTP method คือ delete - Route คือ "/products/:id"
 
 ---
 
 **9. How does your API respond when something goes wrong — for example, when a product with a given ID does not exist?**
 
 *Your answer:*
+- เมื่อทำการ Get/Put/Delete ด้วย id 0 ที่ไม่มี ก็จะ status(404), "Product not found" เพราะมีเขียนดักไว้แล้วว่า ถ้าไม่มี Product จะต้อง error นี้ครับ
 
 ---
 
 **10. What was the hardest part of building this API and what did you do to get past it?**
 
 *Your answer:*
+- ผมคิดว่าการทำ middlewares และ error handling คือ ส่วนที่ยากที่สุด เนื่องจากยังมีประสบการณ์การทำ api กันน้อย ทำให้ไม่ทราบว่าจะมี case แบบไหนบ้างที่จะ error/ป้องกันความปลอดภัยได้บ้าง
+- การทำโปรเจ็คจริงที่มีลูกค้าเข้ามาใช้งานจริง ๆ จะทำให้เห็นปัญญาตรงที่ได้ชัดเจน/หลากหลายรูปแบบมากขึ้น แล้วเราก็นำไปอัพเดท/ปรับปรุง api ของเราให้มีคุณภาพมากยิ่งขึ้นครับ
