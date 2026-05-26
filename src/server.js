@@ -11,13 +11,35 @@ app.get('/', (req, res) => {
 });
 
 app.get("/products", (req, res) => {
-  res.json(products);
+  try {
+    return res.status(200).json({ success:true, data:products });
+  }
+  catch (error) {
+    return res.status(400).json({ success:false, error:error });
+  }
 });
 app.get("/products/:id", (req, res) => {
-  const product = products.find((p) => p.id === req.params.id);
-  res.json(product);
+  try {
+    const product = products.find((p) => p.id === req.params.id);
+    return res.status(200).json({ success:true, data:product });
+  }
+  catch (error) {
+    return res.status(400).json({ success:false, error:error });
+  }
 });
 app.post("/products", (req, res) => {
+  const { name, price, quantity } = req.body || {};
+  if (!name || price === undefined || quantity === undefined) {
+    return res.status(400).json({ error: "Name, price and quantity are required" });
+  }
+  try {
+    const nextId = String( (products.reduce((max, p) => Math.max(max, Number(p.id)), 0) || 0) + 1 );
+    const newProduct = { id:nextId, name, price:Number(price), quantity:Number(quantity || 1) };
+    products.push(newProduct);
+    return res.status(201).json({ success:true, data:newProduct });
+  } catch (error) {
+    return res.status(400).json({ success:false, error:error.message });
+  };
 });
 app.put("/products/:id", (req, res) => {
 });
