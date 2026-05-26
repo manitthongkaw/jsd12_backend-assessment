@@ -4,6 +4,7 @@
 
 **Loom Video (must be set to public — anyone with the link):**
 [paste your Loom video URL here]
+https://www.loom.com/share/f010e667dcca4c9d81ad850f47a261bb
 
 ---
 
