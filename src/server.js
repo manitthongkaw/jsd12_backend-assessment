@@ -21,6 +21,9 @@ app.get("/products", (req, res) => {
 app.get("/products/:id", (req, res) => {
   try {
     const product = products.find((p) => p.id === req.params.id);
+    if (!product) {
+      return res.status(404).json({ success:false, error:"Product not found" });
+    };
     return res.status(200).json({ success:true, data:product });
   }
   catch (error) {
@@ -42,6 +45,22 @@ app.post("/products", (req, res) => {
   };
 });
 app.put("/products/:id", (req, res) => {
+  const { name, price, quantity } = req.body || {};
+  if (name == undefined && price == undefined && quantity == undefined) {
+    return res.status(400).json({ success:false, error:"One field is required to update", });
+  }
+  try {
+    const product = products.find((p) => p.id === req.params.id);
+    if (!product) {
+      return res.status(404).json({ success:false, error:"Product not found" });
+    };
+    product.name = name ?? product.name;
+    product.price = Number(price) ?? product.price;
+    product.quantity = Number(quantity) ?? product.quantity;
+    return res.status(200).json({ success:true, data:product });
+  } catch (error) {
+    return res.status(400).json({ success:false, error:error.message });
+  };
 });
 app.delete("/products/:id", (req, res) => {
 });
