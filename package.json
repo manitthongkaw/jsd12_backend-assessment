@@ -2,17 +2,17 @@
   "name": "jsd12-backend-assessment",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://github.com/manitthongkaw/jsd12_backend-assessment#readme",
+  "homepage": "https://github.com/manitthongkaw/jsd12_backend-assessment",
   "bugs": {
-    "url": "https://github.com/manitthongkaw/jsd12_backend-assessment/issues"
+    "url": "https://github.com/manitthongkaw/jsd12_backend-assessment"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manitthongkaw/jsd12_backend-assessment.git"
   },
   "license": "ISC",
-  "author": "",
-  "type": "commonjs",
+  "author": "Manit Thongkaw (Arm)",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "dev": "node --watch src/server.js"

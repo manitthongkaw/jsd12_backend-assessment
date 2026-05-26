@@ -20,6 +20,13 @@ Do not copy from documentation, your code comments, or AI output. If you are uns
 **1. What does each HTTP method in your API mean — GET, POST, PUT or PATCH, and DELETE? Why do we use different methods instead of just using POST for everything?**
 
 *Your answer:*
+Get ใช้สำหรับเรียก รับข้อมูลจาก server ไปแสดงบน Client browser ที่เรียกขอข้อมูล
+Post ใช้สำหรับส่งข้อมูลมายัง server แล้วเพิ่มข้อมูลลง Database
+Put ใช้สำหรับส่งข้อมูลมายัง server โดยโครงสร้างข้อมูลต้องตรงกับข้อมูลใน Database ทั้งก้อน แล้วแก้ไขข้อมูลใน Database
+Patch ใช้สำหรับส่งข้อมูลมายัง server โดยโครงสร้างข้อมูลบางส่วนตรงกับข้อมูลใน Database เพื่อแก้ไขข้อมูลใน Database
+Delete ใช้สำหรับลบข้อมูลใน Database โดยส่วนใหญ่ใช้ id เพื่อระบุบว่าจะลบข้อมูลตัวไหนครับ
+
+ที่ไม่สามารถใช้แค่ Post อย่างเดียวได้ เพราะ ถ้าระบุบ routes/req header มาไม่ตรง api ที่ยิงมาจะไม่ทำงานครับ
 
 ---
 
