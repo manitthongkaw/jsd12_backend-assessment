@@ -63,6 +63,16 @@ app.put("/products/:id", (req, res) => {
   };
 });
 app.delete("/products/:id", (req, res) => {
+  try {
+    const product = products.find((p) => p.id === req.params.id);
+    if (!product) {
+      return res.status(404).json({ success:false, error:"Product not found" });
+    };
+    products.splice(product, 1);
+    return res.status(200).json({ success:true, data:products });
+  } catch (error) {
+    return res.status(400).json({ success:false, error:error.message });
+  };
 });
 
 const port = 1414;
